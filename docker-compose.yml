@@ -1,0 +1,39 @@
+version: '2'
+
+services:
+  app:
+    build: .
+    image: poc-chat-amber
+    command: amber watch
+    environment:
+      DATABASE_URL: sqlite3:./db/poc_chat_amber_development.db
+    ports:
+      - 3000:3000
+    links:
+      - db
+    volumes:
+    - .:/app
+    - nodes:/app/node_modules
+    - shards:/app/lib
+
+  migrate:
+    build: .
+    image: poc-chat-amber
+    command: bash -c 'amber db migrate seed'
+    environment:
+      DATABASE_URL: sqlite3:./db/poc_chat_amber_development.db
+    volumes:
+      - .:/app
+    links:
+      - db
+
+  db:
+    image: poc-chat-amber
+    command: 'bash -c "ls > /dev/null"'
+    volumes:
+    - db:/app/local/db
+
+volumes:
+  db:
+  nodes:
+  shards:
