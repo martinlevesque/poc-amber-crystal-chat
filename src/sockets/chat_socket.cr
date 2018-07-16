@@ -2,8 +2,10 @@ struct ChatSocket < Amber::WebSockets::ClientSocket
   channel "*", ChatRoomChannel
   
   def on_connect
-    # returning true accept all connections
-    # you can use authentication here
+    
+    p "self session?"
+    p self.session
+    
     true
   end
 end

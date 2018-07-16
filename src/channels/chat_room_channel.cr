@@ -9,10 +9,11 @@ class ChatRoomChannel < Amber::WebSockets::Channel
         message: msg["payload"]["msg"],
         channel: msg["topic"]
       ).save
+      
+      rebroadcast!(msg)
     rescue ex
       puts ex.message
     end
     
-    rebroadcast!(msg)
   end
 end

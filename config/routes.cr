@@ -32,6 +32,7 @@ Amber::Server.configure do
     
     resources "/messages", MessageController
     get "/", HomeController, :index
+    post "/set-username", HomeController, :set_username
     get "/c/:id", HomeController, :custom_channel
     
   end

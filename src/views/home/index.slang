@@ -3,8 +3,9 @@
   .col-sm-12.col-md-6
     h2 = "Welcome !"
 
+
 .row
-  table
+  table#main_table
     tr
       th Username
       th Msg
@@ -15,12 +16,13 @@
         td = message.message
       
 .row
-  .col-xs-4
-    input type="text" id="username" placeholder="username"
-  .col-xs-4 
-    input type="text" id="msg" placeholder="Msg"
-  .col-xs-4 
-    input type="button" id="msg" value="Send" onclick="sendMsg()"
+  form
+    .col-xs-4
+      input type="text" id="username" placeholder="username"
+    .col-xs-4 
+      input type="text" id="msg" placeholder="Msg"
+    .col-xs-4 
+      input type="button" id="msg" value="Send" onclick="sendMsg()"
 
 script src="/amber.min.js"
 
@@ -45,7 +47,14 @@ javascript:
     channel.join();
     
     channel.on('message_new', function(payload) {
-      console.log(payload);
+      const limitTable = 15;
+    
+      const table = document.getElementById("main_table");
+      const row = table.insertRow(1);
+      row.insertCell(0).innerHTML = payload.username;
+      row.insertCell(1).innerHTML = payload.msg;
+      
+      table.deleteRow(limitTable + 1);
     });
   });
   
